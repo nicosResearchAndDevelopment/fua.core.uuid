@@ -1,0 +1,3 @@
+# fua.core.uuid
+
+---
