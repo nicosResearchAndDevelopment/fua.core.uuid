@@ -1,4 +1,4 @@
-module.exports = ({'mode': mode = "local", 'parameter': parameter}) => {
+module.exports = ({'mode': mode = "local", 'parameter': parameter = {}}) => {
     try {
         let UUIDGeneratorNode;
         switch (mode) {
