@@ -14,7 +14,7 @@ module.exports = ({'mode': mode = "local", 'parameter': parameter = {}}) => {
                     let
                         result_
                     ;
-                    args = args || {'type': "default"};
+                    args = args || {'type': "default", 'prefix': ""};
 
                     switch (args['type']) {
                         case "scramble":
@@ -24,7 +24,7 @@ module.exports = ({'mode': mode = "local", 'parameter': parameter = {}}) => {
                             result_ = ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c => (c ^ (crypto$1.randomBytes(1)[0] & (15 >> (c / 4)))).toString(16));
                             break; // default
                     } // switch (args['type'])
-                    return result_;
+                    return ((args['prefix']) ? `${args['prefix']}${result_}` : result_);
                 }; // UUIDGeneratorNode
                 break; // default, local
         } // switch (mode)
