@@ -29,14 +29,16 @@ const
     },
     crypto          = require('crypto'),
     uuid_v4_methods = {
-        'static':   () => 'f81d4fae-7dec-11d0-a765-00a0c91e6bf6',
-        'current':  require("../src/core.uuid.js")({
-            mode:      "local",
-            parameter: {crypto}
-        }),
-        'oneliner': () => ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c => (c ^ (crypto.randomBytes(1)[0] & (15 >> (c / 4)))).toString(16)),
-        'beta':     require('../src/core.uuid.beta.js').v4,
-        'public':   require('uuid').v4
+        'static': () => 'f81d4fae-7dec-11d0-a765-00a0c91e6bf6',
+        //'previous':   require("../back/2021_03_02/core.uuid.js")({
+        //    mode:      "local",
+        //    parameter: {crypto}
+        //}),
+        //'oneliner':   () => ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c => (c ^ (crypto.randomBytes(1)[0] & (15 >> (c / 4)))).toString(16)),
+        'current_v4': require('../src/core.uuid.js').v4,
+        'public_v4':  require('uuid').v4,
+        'current_v1': require('../src/core.uuid.js').v1,
+        'public_v1':  require('uuid').v1
     },
     test_array      = shuffle((new Array(config.tests)).fill(Object.keys(uuid_v4_methods)).flat(1).map(val => val)),
     results         = Object.fromEntries(Object.keys(uuid_v4_methods).map(key => [key, {

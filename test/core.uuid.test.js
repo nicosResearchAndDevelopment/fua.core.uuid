@@ -1,11 +1,12 @@
 const
     {describe, test} = require('mocha'),
     expect           = require('expect'),
-    crypto           = require("crypto"),
-    uuid             = require("../src/core.uuid.js")({
-        mode:      "local",
-        parameter: {crypto}
-    }),
+    //crypto           = require("crypto"),
+    //uuid             = require("../src/core.uuid.js")({
+    //    mode:      "local",
+    //    parameter: {crypto}
+    //}),
+    uuid             = require("../src/core.uuid.js").v4,
     RE_uuid          = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 describe("a uuid should always", () => {

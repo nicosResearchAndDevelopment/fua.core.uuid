@@ -1,5 +1,5 @@
 {
-  "name": "core.uuid",
+  "name": "@nrd/fua.core.uuid",
   "version": "1.0.0",
   "description": "identifier generator",
   "main": "./src/core.uuid.js",
@@ -8,7 +8,7 @@
     "expect": "^26.6.2"
   },
   "scripts": {
-    "test": "jest"
+    "test": "mocha"
   },
   "mocha": {
     "bail": false,
@@ -20,10 +20,11 @@
     "url": "ssh://git@git02.int.nsc.ag:10022/Research/fua/lib/core.uuid.git"
   },
   "keywords": [
-    "identifier",
-    "unique identifier",
-    "globally unique identifier"
+    "id",
+    "uid",
+    "guid",
+    "uuid"
   ],
-  "author": "jlangkau@nicos-ag.com",
-  "license": "ISC"
+  "author": "spetrac@nicos-ag.com",
+  "license": "UNLICENSED"
 }

@@ -1,39 +1,7 @@
-module.exports = ({'mode': mode = "local", 'parameter': parameter = {}}) => {
-    try {
-        let UUIDGeneratorNode;
-        switch (mode) {
-            //case "proxy":
-            //    break;
-            case "local":
-            default:
-                const
-                    //TODO: require eleminieren, sollte als parameter übergeben werden...
-                    crypto$1      = parameter['crypto'] || (typeof require !== "undefined" && require('crypto'))
-                ; // const
-                UUIDGeneratorNode = (args = {'type': "default", 'prefix': ""}) => {
-                    let
-                        result_
-                    ;
-                    args = args || {'type': "default", 'prefix': ""};
+const uuid = exports;
 
-                    switch (args['type']) {
-                        case "scramble":
-                            args['length'] = args['length'] || 8;
-                            break; // scramble
-                        default:
-                            result_ = ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c => (c ^ (crypto$1.randomBytes(1)[0] & (15 >> (c / 4)))).toString(16));
-                            break; // default
-                    } // switch (args['type'])
-                    return ((args['prefix']) ? `${args['prefix']}${result_}` : result_);
-                }; // UUIDGeneratorNode
-                break; // default, local
-        } // switch (mode)
+uuid.scramble = require('./core.uuid.scramble.js');
+uuid.v1       = require('./core.uuid.v1.js');
+uuid.v4       = require('./core.uuid.v4.js');
 
-        return UUIDGeneratorNode;
-
-    } catch (jex) {
-        //return UUIDGeneratorNode;
-        throw jex;
-    } // try
-
-} // module.exports
+Object.freeze(uuid);
