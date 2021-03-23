@@ -5,6 +5,13 @@ const
         (value, index) => (index + 0x100).toString(16).substr(1)
     ));
 
+_.lockProp = function (obj, ...keys) {
+    const lock = {writable: false, configurable: false};
+    for (let key of keys) {
+        Object.defineProperty(obj, key, lock);
+    }
+};
+
 _.bytesToUUID = function (bytes) {
     return _byteToHex[bytes[0]] + _byteToHex[bytes[1]] +
         _byteToHex[bytes[2]] + _byteToHex[bytes[3]] +

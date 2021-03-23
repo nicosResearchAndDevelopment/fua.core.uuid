@@ -12,4 +12,10 @@ function uuid_v4() {
     return _.bytesToUUID(bytes);
 } // uuid_v4
 
+uuid_v4.urn = function () {
+    return 'urn:uuid:' + uuid_v4();
+};
+
+_.lockProp(uuid_v4, 'urn');
+
 module.exports = uuid_v4;

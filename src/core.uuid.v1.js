@@ -95,4 +95,10 @@ function uuid_v1() {
     return _.bytesToUUID(bytes);
 } // uuid_v1
 
+uuid_v1.urn = function () {
+    return 'urn:uuid:' + uuid_v1();
+};
+
+_.lockProp(uuid_v1, 'urn');
+
 module.exports = uuid_v1;
