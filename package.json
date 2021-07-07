@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "identifier generator",
   "main": "./src/core.uuid.js",
+  "files": [
+    "src/*"
+  ],
   "devDependencies": {
     "mocha": "^8.3.0",
     "expect": "^26.6.2"
