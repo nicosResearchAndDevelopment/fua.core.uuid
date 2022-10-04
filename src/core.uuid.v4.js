@@ -1,7 +1,10 @@
 const
     _ = require('./core.uuid.util.js');
 
-/** @see {@link https://github.com/uuidjs/uuid/blob/master/src/v4.js uuid-js / v4.js} */
+/**
+ * @returns {string}
+ * @see {@link https://github.com/uuidjs/uuid/blob/master/src/v4.js uuid-js / v4.js}
+ */
 function uuid_v4() {
     const bytes = _.randomBytes(16);
 
@@ -12,10 +15,25 @@ function uuid_v4() {
     return _.bytesToUUID(bytes);
 } // uuid_v4
 
+/**
+ * @returns {string}
+ */
 uuid_v4.urn = function () {
     return 'urn:uuid:' + uuid_v4();
 };
 
 _.lockProp(uuid_v4, 'urn');
+
+/**
+ * @param {string} value
+ * @returns {boolean}
+ */
+uuid_v4.valid = function (value) {
+    const bytes = _.uuidToBytes(value);
+    // return bytes && (bytes[6] >>> 4) === 0b0100 && (bytes[8] >>> 6) === 0b10;
+    return bytes && (bytes[6] >>> 4) === 0b0100;
+};
+
+_.lockProp(uuid_v4, 'valid');
 
 module.exports = uuid_v4;

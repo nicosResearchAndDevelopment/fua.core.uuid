@@ -1,5 +1,6 @@
 const
-    _ = require('./core.uuid.util.js');
+    _                = require('./core.uuid.util.js'),
+    GREGORIAN_OFFSET = 12219292800000;
 
 let
     _nodeId    = _.emptyBytes(6),
@@ -18,7 +19,10 @@ let
     _clockSeq       = ((seedBytes[6] << 8) | seedBytes[7]) & 0x3fff;
 })(); // seed_uuid_v1
 
-/** @see {@link https://github.com/uuidjs/uuid/blob/master/src/v1.js uuid-js / v1.js} */
+/**
+ * @returns {string}
+ * @see {@link https://github.com/uuidjs/uuid/blob/master/src/v1.js uuid-js / v1.js}
+ */
 function uuid_v1() {
     const bytes = _.emptyBytes(16);
 
@@ -95,10 +99,57 @@ function uuid_v1() {
     return _.bytesToUUID(bytes);
 } // uuid_v1
 
+/**
+ * @returns {string}
+ */
 uuid_v1.urn = function () {
     return 'urn:uuid:' + uuid_v1();
 };
 
 _.lockProp(uuid_v1, 'urn');
+
+/**
+ * @param {string} value
+ * @returns {boolean}
+ */
+uuid_v1.valid = function (value) {
+    const bytes = _.uuidToBytes(value);
+    // return bytes && (bytes[6] >>> 4) === 0b0001 && (bytes[8] >>> 6) === 0b10;
+    return bytes && (bytes[6] >>> 4) === 0b0001;
+};
+
+_.lockProp(uuid_v1, 'valid');
+
+/**
+ * @param {string} value
+ * @returns {Date}
+ */
+uuid_v1.date = function (value) {
+    const bytes = _.uuidToBytes(value);
+    // if (!(bytes && (bytes[6] >>> 4) === 0b0001 && (bytes[8] >>> 6) === 0b10))
+    if (!(bytes && (bytes[6] >>> 4) === 0b0001))
+        return new Date(NaN);
+    // extract time low
+    const tl    = ((
+        ((
+            ((
+                ((
+                    bytes[0]
+                ) << 8) | bytes[1]
+            ) << 8) | bytes[2]
+        ) << 8) | bytes[3]
+    ) + 0x100000000) % 0x100000000;
+    // extract time mid and high
+    const tmh   = ((
+        ((
+            ((
+                bytes[6] & 0x0f
+            ) << 8) | bytes[7]
+        ) << 8) | bytes[4]
+    ) << 8) | bytes[5];
+    // calculate milliseconds from time low, mid and high and convert from Gregorian epoch to unix epoch
+    const mSecs = ((tmh / 10000) * 0x100000000) + (tl / 10000) - 12219292800000;
+    return new Date(mSecs);
+};
 
 module.exports = uuid_v1;
