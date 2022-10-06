@@ -100,56 +100,50 @@ function uuid_v1() {
 } // uuid_v1
 
 /**
- * @returns {string}
- */
-uuid_v1.urn = function () {
-    return 'urn:uuid:' + uuid_v1();
-};
-
-_.lockProp(uuid_v1, 'urn');
-
-/**
  * @param {string} value
  * @returns {boolean}
  */
-uuid_v1.valid = function (value) {
+uuid_v1.isValid = function (value) {
     const bytes = _.uuidToBytes(value);
-    // return bytes && (bytes[6] >>> 4) === 0b0001 && (bytes[8] >>> 6) === 0b10;
     return bytes && (bytes[6] >>> 4) === 0b0001;
-};
-
-_.lockProp(uuid_v1, 'valid');
+}; // uuid_v1.isValid
 
 /**
  * @param {string} value
  * @returns {Date}
  */
-uuid_v1.date = function (value) {
+uuid_v1.toDate = function (value) {
     const bytes = _.uuidToBytes(value);
-    // if (!(bytes && (bytes[6] >>> 4) === 0b0001 && (bytes[8] >>> 6) === 0b10))
-    if (!(bytes && (bytes[6] >>> 4) === 0b0001))
-        return new Date(NaN);
-    // extract time low
-    const tl    = ((
-        ((
+    if (!(bytes && (bytes[6] >>> 4) === 0b0001)) return new Date(NaN);
+    const
+        // extract time low
+        tl    = ((
             ((
                 ((
-                    bytes[0]
-                ) << 8) | bytes[1]
-            ) << 8) | bytes[2]
-        ) << 8) | bytes[3]
-    ) + 0x100000000) % 0x100000000;
-    // extract time mid and high
-    const tmh   = ((
-        ((
+                    ((
+                        bytes[0]
+                    ) << 8) | bytes[1]
+                ) << 8) | bytes[2]
+            ) << 8) | bytes[3]
+        ) + 0x100000000) % 0x100000000,
+        // extract time mid and high
+        tmh   = ((
             ((
-                bytes[6] & 0x0f
-            ) << 8) | bytes[7]
-        ) << 8) | bytes[4]
-    ) << 8) | bytes[5];
-    // calculate milliseconds from time low, mid and high and convert from Gregorian epoch to unix epoch
-    const mSecs = ((tmh / 10000) * 0x100000000) + (tl / 10000) - 12219292800000;
+                ((
+                    bytes[6] & 0x0f
+                ) << 8) | bytes[7]
+            ) << 8) | bytes[4]
+        ) << 8) | bytes[5],
+        // calculate milliseconds from time low, mid and high and convert from Gregorian epoch to unix epoch
+        mSecs = ((tmh / 10000) * 0x100000000) + (tl / 10000) - 12219292800000;
     return new Date(mSecs);
-};
+}; // uuid_v1.toDate
+
+/**
+ * @returns {string}
+ */
+uuid_v1.urn = function () {
+    return 'urn:uuid:' + uuid_v1();
+}; // uuid_v1.urn
 
 module.exports = uuid_v1;

@@ -2,15 +2,14 @@ const
     uuid = exports,
     _    = require('./core.uuid.util.js');
 
-uuid.scramble = require('./core.uuid.scramble.js');
-uuid.v1       = require('./core.uuid.v1.js');
-uuid.v4       = require('./core.uuid.v4.js');
+uuid.v1 = require('./core.uuid.v1.js');
+uuid.v4 = require('./core.uuid.v4.js');
 
 /**
  * @param {string} value
  * @returns {{value: any, valid: boolean, version?: number, variant?: number, urn?: boolean}}
  */
-uuid.test = function (value) {
+uuid.detect = function (value) {
     const result = {value, valid: false};
     if (typeof value !== 'string') return result;
 
@@ -25,9 +24,18 @@ uuid.test = function (value) {
                 : (bytes[8] >>> 5) === 0b111 ? 3
                     : -1;
 
-    result.valid = result.version > 0 && result.version <= 5 && result.variant >= 0;
+    result.valid = result.version >= 1 && result.version <= 5 && result.variant >= 0;
     return result;
-};
+}; // uuid.detect
 
-Object.freeze(uuid);
+/**
+ * @param {number} [length=16]
+ * @returns {string}
+ */
+uuid.scramble = function (length = 16) {
+    const bytes = _.randomBytes(length);
+    return bytes.toString('base64url');
+} // uuid.scramble
+
+_.lockAllProp(uuid, Infinity);
 module.exports = uuid;

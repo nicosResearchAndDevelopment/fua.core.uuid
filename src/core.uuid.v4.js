@@ -16,24 +16,19 @@ function uuid_v4() {
 } // uuid_v4
 
 /**
+ * @param {string} value
+ * @returns {boolean}
+ */
+uuid_v4.isValid = function (value) {
+    const bytes = _.uuidToBytes(value);
+    return bytes && (bytes[6] >>> 4) === 0b0100;
+}; // uuid_v4.isValid
+
+/**
  * @returns {string}
  */
 uuid_v4.urn = function () {
     return 'urn:uuid:' + uuid_v4();
-};
-
-_.lockProp(uuid_v4, 'urn');
-
-/**
- * @param {string} value
- * @returns {boolean}
- */
-uuid_v4.valid = function (value) {
-    const bytes = _.uuidToBytes(value);
-    // return bytes && (bytes[6] >>> 4) === 0b0100 && (bytes[8] >>> 6) === 0b10;
-    return bytes && (bytes[6] >>> 4) === 0b0100;
-};
-
-_.lockProp(uuid_v4, 'valid');
+}; // uuid_v4.urn
 
 module.exports = uuid_v4;

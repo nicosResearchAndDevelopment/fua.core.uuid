@@ -12,7 +12,7 @@ describe('uuid.v1', function () {
     test('develop', function () {
         const
             now     = new Date(),
-            uuidNow = uuid.v1.date(uuid.v1());
+            uuidNow = uuid.v1.toDate(uuid.v1());
 
         console.log(now);
         console.log(uuidNow);
@@ -49,7 +49,7 @@ describe('uuid.v4', function () {
 
     test('should validate its own generated uuids', function () {
         for (let i = 0; i < REPETITIONS; i++) {
-            expect(uuid.v4.valid(uuid.v4())).toBeTruthy();
+            expect(uuid.v4.isValid(uuid.v4())).toBeTruthy();
         }
     });
 
@@ -62,11 +62,11 @@ describe('uuid.v4', function () {
 
 });
 
-describe('uuid.test', function () {
+describe('uuid.detect', function () {
 
     test('should detect uuid.v1', function () {
         for (let i = 0; i < REPETITIONS; i++) {
-            expect(uuid.test(uuid.v1())).toMatchObject({
+            expect(uuid.detect(uuid.v1())).toMatchObject({
                 valid:   true,
                 urn:     false,
                 version: 1,
@@ -77,7 +77,7 @@ describe('uuid.test', function () {
 
     test('should detect uuid.v1.urn', function () {
         for (let i = 0; i < REPETITIONS; i++) {
-            expect(uuid.test(uuid.v1.urn())).toMatchObject({
+            expect(uuid.detect(uuid.v1.urn())).toMatchObject({
                 valid:   true,
                 urn:     true,
                 version: 1,
@@ -88,7 +88,7 @@ describe('uuid.test', function () {
 
     test('should detect uuid.v4', function () {
         for (let i = 0; i < REPETITIONS; i++) {
-            expect(uuid.test(uuid.v4())).toMatchObject({
+            expect(uuid.detect(uuid.v4())).toMatchObject({
                 valid:   true,
                 urn:     false,
                 version: 4,
@@ -99,7 +99,7 @@ describe('uuid.test', function () {
 
     test('should detect uuid.v4.urn', function () {
         for (let i = 0; i < REPETITIONS; i++) {
-            expect(uuid.test(uuid.v4.urn())).toMatchObject({
+            expect(uuid.detect(uuid.v4.urn())).toMatchObject({
                 valid:   true,
                 urn:     true,
                 version: 4,
