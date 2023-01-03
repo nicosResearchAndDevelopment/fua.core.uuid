@@ -1,7 +1,7 @@
 {
   "name": "@nrd/fua.core.uuid",
   "version": "1.0.0",
-  "description": "identifier generator",
+  "description": "",
   "main": "./src/core.uuid.js",
   "files": [
     "src/*"
@@ -23,9 +23,6 @@
     "url": "ssh://git@git02.int.nsc.ag:10022/Research/fua/lib/core.uuid.git"
   },
   "keywords": [
-    "id",
-    "uid",
-    "guid",
     "uuid"
   ],
   "author": "spetrac@nicos-ag.com",
