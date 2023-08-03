@@ -1,7 +1,7 @@
 const
     {describe, test} = require('mocha'),
     expect           = require('expect'),
-    _                = require('../src/core.uuid.util.js');
+    _                = require('../src/uuid.util.js');
 
 describe('uuid.util', () => {
 

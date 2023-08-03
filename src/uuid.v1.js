@@ -1,15 +1,15 @@
 const
-    _                = require('./core.uuid.util.js'),
+    util             = require('./uuid.util.js'),
     GREGORIAN_OFFSET = 12219292800000;
 
 let
-    _nodeId    = _.emptyBytes(6),
+    _nodeId    = util.emptyBytes(6),
     _clockSeq  = 0,
     _lastMSecs = 0,
     _lastNSecs = 0;
 
 (() => {
-    const seedBytes = _.randomBytes(8);
+    const seedBytes = util.randomBytes(8);
     _nodeId[0]      = seedBytes[0] | 0x01;
     _nodeId[1]      = seedBytes[1];
     _nodeId[2]      = seedBytes[2];
@@ -24,7 +24,7 @@ let
  * @see {@link https://github.com/uuidjs/uuid/blob/master/src/v1.js uuid-js / v1.js}
  */
 function uuid_v1() {
-    const bytes = _.emptyBytes(16);
+    const bytes = util.emptyBytes(16);
 
     let
         node     = _nodeId,
@@ -96,7 +96,7 @@ function uuid_v1() {
     bytes[14] = node[4];
     bytes[15] = node[5];
 
-    return _.bytesToUUID(bytes);
+    return util.bytesToUUID(bytes);
 } // uuid_v1
 
 /**
@@ -104,7 +104,7 @@ function uuid_v1() {
  * @returns {boolean}
  */
 uuid_v1.isValid = function (value) {
-    const bytes = _.uuidToBytes(value);
+    const bytes = util.uuidToBytes(value);
     return bytes && (bytes[6] >>> 4) === 0b0001;
 }; // uuid_v1.isValid
 
@@ -113,7 +113,7 @@ uuid_v1.isValid = function (value) {
  * @returns {Date}
  */
 uuid_v1.toDate = function (value) {
-    const bytes = _.uuidToBytes(value);
+    const bytes = util.uuidToBytes(value);
     if (!(bytes && (bytes[6] >>> 4) === 0b0001)) return new Date(NaN);
     const
         // extract time low

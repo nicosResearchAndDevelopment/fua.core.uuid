@@ -2,7 +2,7 @@ const
     {describe, test} = require('mocha'),
     expect           = require('expect'),
     //crypto           = require('crypto'),
-    uuid             = require('../src/core.uuid.js'),
+    uuid             = require('../src/uuid.js'),
     RE_uuid          = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i,
     RE_urn_uuid      = /^urn:uuid:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/,
     REPETITIONS      = 100;

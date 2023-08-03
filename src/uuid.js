@@ -1,9 +1,9 @@
 const
     uuid = exports,
-    _    = require('./core.uuid.util.js');
+    util = require('./uuid.util.js');
 
-uuid.v1 = require('./core.uuid.v1.js');
-uuid.v4 = require('./core.uuid.v4.js');
+uuid.v1 = require('./uuid.v1.js');
+uuid.v4 = require('./uuid.v4.js');
 
 /**
  * @param {string} value
@@ -14,7 +14,7 @@ uuid.detect = function (value) {
     if (typeof value !== 'string') return result;
 
     result.urn  = value.startsWith('urn:uuid:');
-    const bytes = _.uuidToBytes(result.urn ? value.substring(9) : value);
+    const bytes = util.uuidToBytes(result.urn ? value.substring(9) : value);
     if (!bytes) return result;
 
     result.version = (bytes[6] >>> 4);
@@ -33,9 +33,9 @@ uuid.detect = function (value) {
  * @returns {string}
  */
 uuid.scramble = function (length = 16) {
-    const bytes = _.randomBytes(length);
+    const bytes = util.randomBytes(length);
     return bytes.toString('base64url');
 } // uuid.scramble
 
-_.lockAllProp(uuid, Infinity);
+util.sealModule(uuid);
 module.exports = uuid;
