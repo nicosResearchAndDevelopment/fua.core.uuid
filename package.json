@@ -2,7 +2,7 @@
   "name": "@nrd/fua.core.uuid",
   "version": "1.0.0",
   "description": "",
-  "main": "./src/core.uuid.js",
+  "main": "./src/uuid.js",
   "files": [
     "src/*"
   ],
