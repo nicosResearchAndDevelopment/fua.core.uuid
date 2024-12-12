@@ -1,4 +1,4 @@
-# @nrd/fua.core.uuid
+# @fua/core.uuid
 
 - [A Universally Unique IDentifier (UUID) URN Namespace](https://tools.ietf.org/html/rfc4122)
 
