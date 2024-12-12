@@ -1,7 +1,7 @@
 {
   "name": "@fua/core.uuid",
   "version": "1.0.1",
-  "description": "",
+  "description": "A universally unique identifier (UUID) is a 128-bit label used for information in computer systems and can guarantee uniqueness across space and time.",
   "main": "./src/uuid.js",
   "files": [
     "src/*"
